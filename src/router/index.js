@@ -72,7 +72,7 @@ export const constantRoutes = [
     redirect: "/dashboard",
     children: [
       {
-        path: "dashboard/index",
+        path: "dashboard",
         component: () => import("@/views/dashboard/index"),
         name: "Dashboard",
         meta: { title: "概览", icon: "dashboard", affix: true }
@@ -172,15 +172,15 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: "/",
+    path: "/user",
     component: Layout,
     redirect: "/user",
     children: [
       {
-        path: "user/user",
+        path: "user",
         component: () => import("@/views/user/User"),
         name: "Dashboard",
-        meta: { title: "用户", icon: "user", affix: true }
+        meta: { title: "用户", icon: "user" }
       }
     ]
   },
@@ -221,7 +221,7 @@ export const asyncRoutes = [
           title: "支付设置",
           roles: ["admin"]
         }
-      },
+      }
     ]
   },
   {
@@ -252,7 +252,7 @@ export const asyncRoutes = [
         meta: {
           title: "PC端"
         }
-      },
+      }
     ]
   },
   {
@@ -292,7 +292,7 @@ export const asyncRoutes = [
           title: "优惠券",
           roles: ["admin"]
         }
-      },
+      }
     ]
   },
   {
@@ -341,7 +341,7 @@ export const asyncRoutes = [
           title: "电子书",
           roles: ["admin"]
         }
-      },
+      }
     ]
   },
   {
@@ -381,9 +381,14 @@ export const asyncRoutes = [
           title: "角色管理",
           roles: ["admin"]
         }
-      },
+      }
     ]
   },
+
+
+
+
+  // 模板样式
   // {
   //   path: '/permission',
   //   component: Layout,
@@ -443,7 +448,7 @@ export const asyncRoutes = [
   // componentsRouter,
   // chartsRouter,
   // nestedRouter,
-  // tableRouter,
+  tableRouter,
 
   // {
   //   path: '/example',
@@ -477,18 +482,18 @@ export const asyncRoutes = [
   //   ]
   // },
 
-  // {
-  //   path: '/tab',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/tab/index'),
-  //       name: 'Tab',
-  //       meta: { title: 'Tab', icon: 'tab' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/tab',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/tab/index'),
+        name: 'Tab',
+        meta: { title: 'Tab', icon: 'tab' }
+      }
+    ]
+  },
 
   // {
   //   path: '/error',
@@ -644,7 +649,7 @@ export const asyncRoutes = [
 
 const createRouter = () =>
   new Router({
-    // mode: 'history', // require service support
+    mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
   });
