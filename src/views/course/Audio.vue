@@ -23,7 +23,7 @@
     </div>
     <el-table
       :key="0"
-      :data="autioList"
+      :data="audioList"
       border
       fit
       highlight-current-row
@@ -108,7 +108,7 @@
       :total="total"
       :page.sync="search.page"
       :limit.sync="search.limit"
-      @pagination="getautioList"
+      @pagination="getaudioList"
     />
 
     <!-- 添加信息 -->
@@ -195,7 +195,7 @@ export default {
   },
   data() {
     return {
-      autioList: [],
+      audioList: [],
       total: 0,
       search: {
         page: 1,
@@ -213,24 +213,24 @@ export default {
     };
   },
   mounted() {
-    // 获取图片数据
-    this.getautioList();
+    // 获取音频数据
+    this.getaudioList();
   },
   methods: {
-    // 获取图片数据
-    async getautioList() {
+    // 获取音频数据
+    async getaudioList() {
       let mes = await fetchList(this.search);
       if (mes.code === 20000) {
         this.total = mes.data.total;
-        this.autioList = mes.data.items;
+        this.audioList = mes.data.items;
       }
-      console.log(this.autioList);
+      console.log(this.audioList);
     },
 
     // 搜索数据
     handleSearch() {
       console.log(111);
-      this.getautioList();
+      this.getaudioList();
     },
 
     // 上架与下架
@@ -242,7 +242,7 @@ export default {
           message: `${row.status === 0 ? "上架成功" : "下架成功"}`,
           type: "success"
         });
-        this.getautioList();
+        this.getaudioList();
       } else {
         this.$message({
           message: `${row.status === 0 ? "上架成功" : "下架成功"}`,
@@ -260,7 +260,7 @@ export default {
           message: "删除成功",
           type: "success"
         });
-        this.getautioList();
+        this.getaudioList();
       } else {
         this.$message({
           message: "删除失败",
@@ -316,7 +316,7 @@ export default {
               this.isAdd = false;
               this.isEdit = false;
               this.ruleForm = Object.assign(defaultRuleForm,{});
-              this.getautioList();
+              this.getaudioList();
             } else {
               this.$message.error("编辑数据失败");
             }
@@ -331,7 +331,7 @@ export default {
             if (mes.code === 20000) {
               this.$message.success(mes.data);
               this.isAdd = false;
-              this.getautioList();
+              this.getaudioList();
             } else {
               this.$message.error("添加数据失败");
             }
