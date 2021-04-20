@@ -168,7 +168,7 @@
       </div>
 
       <span slot="footer" class="dialog-footer">
-        <el-button @click="isAdd = false">取 消</el-button>
+        <el-button @click="handleCloseAdd">取 消</el-button>
         <el-button type="primary" @click="handleSubmit">提 交</el-button>
       </span>
     </el-dialog>
@@ -179,6 +179,14 @@
 import { fetchList, updateMedia, createMedia, deleteMedia } from "@/api/media";
 import Pagination from "@/components/Pagination";
 import Tinymce from "@/components/Tinymce";
+const defaultRuleForm = {
+  title: "",
+  cover: "",
+  try: "",
+  content: "",
+  price: 5,
+  status: 0
+};
 export default {
   name: "media",
   components: {
@@ -196,14 +204,7 @@ export default {
         title: ""
       },
       isAdd: false,
-      ruleForm: {
-        title: "",
-        cover: "",
-        try: "",
-        content: "",
-        price: 5,
-        status: 0
-      },
+      ruleForm: Object.assign(defaultRuleForm,{}),
       rules: {
         title: [{ required: true, message: "请输入活动名称", trigger: "blur" }]
       },
@@ -276,6 +277,8 @@ export default {
     // 关闭新增图文对话框
     handleCloseAdd() {
       this.isAdd = false;
+      this.isEdit = false;
+      this.ruleForm = Object.assign(defaultRuleForm,{});
     },
 
     // 图片上传
@@ -312,6 +315,7 @@ export default {
               this.$message.success(mes.data);
               this.isAdd = false;
               this.isEdit = false;
+              this.ruleForm = Object.assign(defaultRuleForm,{});
               this.getMediaList();
             } else {
               this.$message.error("编辑数据失败");
