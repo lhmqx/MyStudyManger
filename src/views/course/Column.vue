@@ -125,7 +125,7 @@
     <!-- 添加信息 -->
     <el-dialog
       title="新增"
-      :visible.sync="isAdd"
+      :visible="isAdd"
       width="100%"
       :before-close="handleCloseAdd"
       fullscreen
