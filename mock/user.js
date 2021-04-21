@@ -117,7 +117,7 @@ module.exports = [
             const { title, page = 1, limit = 20 } = config.query
 
             let mockList = List.filter(item => {
-                if (title && item.title.indexOf(title) < 0) return false
+                if (title && item.user.username.indexOf(title) < 0) return false
                 return true
             })
 

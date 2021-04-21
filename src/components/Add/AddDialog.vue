@@ -147,8 +147,6 @@ export default {
     handleSelectionChange(val){
         this.checkList = val;
     },
-
-
   }
 };
 </script>
