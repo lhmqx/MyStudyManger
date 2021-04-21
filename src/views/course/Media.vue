@@ -204,7 +204,7 @@ export default {
         title: ""
       },
       isAdd: false,
-      ruleForm: Object.assign(defaultRuleForm,{}),
+      ruleForm: Object.assign(defaultRuleForm, {}),
       rules: {
         title: [{ required: true, message: "请输入活动名称", trigger: "blur" }]
       },
@@ -234,39 +234,27 @@ export default {
     },
 
     // 上架与下架
-    async handleChangeStatus(row, index) {
-      let status = row.status === 0 ? 1 : 0;
-      let mes = await updateMedia({ status, index });
-      if (mes.code === 20000) {
-        this.$message({
-          message: `${row.status === 0 ? "上架成功" : "下架成功"}`,
-          type: "success"
-        });
-        this.getMediaList();
-      } else {
-        this.$message({
-          message: `${row.status === 0 ? "上架成功" : "下架成功"}`,
-          type: "error"
-        });
-      }
+    handleChangeStatus(row, index) {
+      row.status = row.status === 0 ? 1 : 0;
+      // let mes = await updateMedia({ status, index });
+      this.$message({
+        message: `${row.status === 0 ? "上架成功" : "下架成功"}`,
+        type: "success"
+      });
     },
 
     // 删除
-    async handleDelete(row, index) {
-      let status = row.status === 0 ? 1 : 0;
-      let mes = await deleteMedia({ status, index });
-      if (mes.code === 20000) {
-        this.$message({
-          message: "删除成功",
-          type: "success"
-        });
-        this.getMediaList();
-      } else {
-        this.$message({
-          message: "删除失败",
-          type: "error"
-        });
+    handleDelete(row, a) {
+      // let status = row.status === 0 ? 1 : 0;
+      let index = this.mediaList.findIndex(item => item == row);
+      if (index != -1) {
+        this.mediaList.splice(index, 1);
       }
+      // let mes = await deleteMedia({ status, index });
+      this.$message({
+        message: "删除成功",
+        type: "success"
+      });
     },
 
     // 新增图文对话框
@@ -278,7 +266,7 @@ export default {
     handleCloseAdd() {
       this.isAdd = false;
       this.isEdit = false;
-      this.ruleForm = Object.assign(defaultRuleForm,{});
+      this.ruleForm = Object.assign(defaultRuleForm, {});
     },
 
     // 图片上传
@@ -315,7 +303,7 @@ export default {
               this.$message.success(mes.data);
               this.isAdd = false;
               this.isEdit = false;
-              this.ruleForm = Object.assign(defaultRuleForm,{});
+              this.ruleForm = Object.assign(defaultRuleForm, {});
               this.getMediaList();
             } else {
               this.$message.error("编辑数据失败");

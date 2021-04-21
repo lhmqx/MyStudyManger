@@ -168,6 +168,16 @@ export const asyncRoutes = [
           title: "专栏",
           roles: ["admin"]
         }
+      },
+      {
+        hidden: true,
+        path: "column_detail",
+        component: () => import("@/views/course/Column_detail"),
+        name: "Column_Detail",
+        meta: {
+          title: "专栏详情",
+          roles: ["admin"]
+        }
       }
     ]
   },
@@ -179,7 +189,7 @@ export const asyncRoutes = [
       {
         path: "user",
         component: () => import("@/views/user/User"),
-        name: "Dashboard",
+        name: "User",
         meta: { title: "用户", icon: "user" }
       }
     ]
@@ -349,7 +359,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: "/setting/shopsetting",
     alwaysShow: true, // will always show the root menu
-    name: "Tools",
+    name: "Setting",
     meta: {
       title: "设置",
       icon: "el-icon-setting",
@@ -384,9 +394,6 @@ export const asyncRoutes = [
       }
     ]
   },
-
-
-
 
   // 模板样式
   // {
@@ -483,14 +490,14 @@ export const asyncRoutes = [
   // },
 
   {
-    path: '/tab',
+    path: "/tab",
     component: Layout,
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/tab/index'),
-        name: 'Tab',
-        meta: { title: 'Tab', icon: 'tab' }
+        path: "index",
+        component: () => import("@/views/tab/index"),
+        name: "Tab",
+        meta: { title: "Tab", icon: "tab" }
       }
     ]
   },
@@ -649,7 +656,7 @@ export const asyncRoutes = [
 
 const createRouter = () =>
   new Router({
-    mode: 'history', // require service support
+    mode: "history", // require service support
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
   });

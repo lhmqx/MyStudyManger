@@ -150,7 +150,21 @@
           </el-form-item>
 
           <el-form-item label="课程内容">
-            <tinymce v-model="ruleForm.content"></tinymce>
+            <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              multiple
+              :limit="3"
+              :file-list="fileList"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">
+                支持mp4，avi，wmv，mov，flv，rmvb，3gp，m4v，mkv格式；文件最大不超过5G。
+                当前店铺版本最大支持720高清转码
+              </div>
+            </el-upload>
           </el-form-item>
 
           <el-form-item label="课程价格">
@@ -188,7 +202,7 @@ const defaultRuleForm = {
   status: 0
 };
 export default {
-  name: "video",
+  name: "Video",
   components: {
     Pagination,
     Tinymce
@@ -209,7 +223,19 @@ export default {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }]
       },
       dialogVisibleAdd: false,
-      isEdit: false
+      isEdit: false,
+      fileList: [
+        {
+          name: "food.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        },
+        {
+          name: "food2.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        }
+      ]
     };
   },
   mounted() {
@@ -229,7 +255,6 @@ export default {
 
     // 搜索数据
     handleSearch() {
-      console.log(111);
       this.getvideoList();
     },
 
@@ -290,6 +315,12 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisibleAdd = true;
     },
+
+    // 课程内容上传之前
+    handlePreview() {},
+
+    // 移除上传课程内容
+    handleRemove() {},
 
     // 开启编辑
     handleEdit(row) {

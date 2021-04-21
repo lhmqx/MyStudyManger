@@ -150,7 +150,20 @@
           </el-form-item>
 
           <el-form-item label="课程内容">
-            <tinymce v-model="ruleForm.content"></tinymce>
+            <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              multiple
+              :limit="3"
+              :file-list="fileList"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">
+                格式支持mp3、m4a，为保证音频加载与播放的流畅性，建议上传大小不超过500M
+              </div>
+            </el-upload>
           </el-form-item>
 
           <el-form-item label="课程价格">
@@ -204,12 +217,24 @@ export default {
         title: ""
       },
       isAdd: false,
-      ruleForm: Object.assign(defaultRuleForm,{}),
+      ruleForm: Object.assign(defaultRuleForm, {}),
       rules: {
         title: [{ required: true, message: "请输入活动名称", trigger: "blur" }]
       },
       dialogVisibleAdd: false,
-      isEdit: false
+      isEdit: false,
+      fileList: [
+        {
+          name: "food.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        },
+        {
+          name: "food2.jpeg",
+          url:
+            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+        }
+      ]
     };
   },
   mounted() {
@@ -278,7 +303,7 @@ export default {
     handleCloseAdd() {
       this.isAdd = false;
       this.isEdit = false;
-      this.ruleForm = Object.assign(defaultRuleForm,{});
+      this.ruleForm = Object.assign(defaultRuleForm, {});
     },
 
     // 图片上传
@@ -290,6 +315,12 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisibleAdd = true;
     },
+
+    // 课程内容上传之前
+    handlePreview(){},
+
+    // 移除上传课程内容
+    handleRemove(){},
 
     // 开启编辑
     handleEdit(row) {
@@ -315,7 +346,7 @@ export default {
               this.$message.success(mes.data);
               this.isAdd = false;
               this.isEdit = false;
-              this.ruleForm = Object.assign(defaultRuleForm,{});
+              this.ruleForm = Object.assign(defaultRuleForm, {});
               this.getaudioList();
             } else {
               this.$message.error("编辑数据失败");
