@@ -30,7 +30,7 @@ module.exports = [{
 
             let mockList = List.filter(item => {
                 // if (type && item.type !== type) return false
-                if (title && item.title.indexOf(title) < 0) return false
+                if (title && item.goods[0].title.indexOf(title) < 0) return false
                 return true
             })
 
