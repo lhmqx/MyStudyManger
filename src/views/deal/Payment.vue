@@ -65,7 +65,7 @@
     <!-- 表单 -->
     <el-dialog
       :title="isEdit ? '编辑' : '新增'"
-      :visible="dialogFormVisible"
+      :visible.sync="dialogFormVisible"
       :before-close="handleCloseAdd"
     >
       <el-form :model="form" label-width="120px" :rules="rules" ref="form">
@@ -131,7 +131,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="handleCloseAdd">取 消</el-button>
         <el-button type="primary" @click="handleEditOrAdd">确 定</el-button>
       </div>
     </el-dialog>
@@ -170,7 +170,7 @@ export default {
         city: [],
         area: []
       },
-      form: Object.assign(defaultForm, {}),
+      form: Object.assign({}, defaultForm),
       rules: {
         account: [{ required: true, message: "请输入账号", trigger: "blur" }],
         path: [{ required: true, message: "请输入详细地址", trigger: "blur" }],
@@ -200,6 +200,7 @@ export default {
 
     // 新增
     handleAddDialog() {
+      this.form = Object.assign({}, defaultForm);
       this.dialogFormVisible = true;
       this.getProvince();
     },
@@ -217,7 +218,26 @@ export default {
     },
 
     // 删除
-    handleDelete(row, index) {},
+    handleDelete(row) {
+      // console.log(row);
+      let index = this.payMentList.findIndex(item => item.id === row.id);
+      if (index !== -1) {
+        this.$confirm("是否要删除该记录", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.payMentList.splice(index, 1);
+            this.$notify({
+              title: "提示",
+              message: "删除成功",
+              type: "success"
+            });
+          })
+          .catch(err => {});
+      }
+    },
 
     // 省市县三级联动
     // 渲染省
@@ -310,18 +330,17 @@ export default {
           } else {
             // 新增模式
             this.payMentList.push(obj);
-            this.form = Object.assign(defaultForm, {});
             this.$notify({
               title: "Success",
               message: "新增收款账号成功",
               type: "success"
             });
           }
-          this.initForm();
           this.dialogFormVisible = false;
         }
       });
     },
+
     // 初始化form
     initForm(obj) {
       if (obj) {
@@ -336,14 +355,6 @@ export default {
         this.form.city = obj.city;
         this.getArea(this.form.city);
         this.form.area = obj.area;
-      } else {
-        this.form.account = "";
-        this.form.province = "";
-        this.form.city = "";
-        this.form.area = "";
-        this.form.name = "";
-        this.form.path = "";
-        this.form.bank = "";
       }
     }
   }
